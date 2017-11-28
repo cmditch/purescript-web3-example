@@ -1,8 +1,7 @@
 module App.App where
 
 import Prelude
-import App.Count (countWatchClass)
-import App.CountForm (countFormClass)
+import App.ContractForm (contractFormClass)
 import Network.Ethereum.Web3 (ETH)
 import React as R
 import React.DOM as D
@@ -19,11 +18,10 @@ appSpec = T.simpleSpec performAction render
     render dispatch _ state _ =
       let props = {statusCallback: dispatch <<< UpdateStatus}
       in [ D.div [P.className "status-bar"] [D.text state.status]
-         , R.createFactory countWatchClass props
-         , R.createFactory countFormClass props
+         , R.createFactory contractFormClass props
          ]
 
     performAction (UpdateStatus status) _ st = void <<< T.modifyState $ _{status=status}
 
 appClass :: forall props. R.ReactClass props
-appClass = T.createClass appSpec {status: "Please enter a count."}
+appClass = T.createClass appSpec {status: "Please enter an int8."}
